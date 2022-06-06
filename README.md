@@ -1,46 +1,106 @@
-# Getting Started with Create React App
+# React Initial setting
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. CRA with typescript
 
-## Available Scripts
+```
+npx react-create-app [프로젝트명] --template typescript
+```
 
-In the project directory, you can run:
+## 2. Set absolute path
 
-### `npm start`
+```
+// tsconfig.json
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+{
+  ...,
+  // 예시
+  "baseUrl": ".",
+  "paths": {
+    "@components/*": ["src/components/*"],
+    "@hooks/*": ["src/hooks/*"],
+    "@layouts/*": ["src/layouts/*"],
+    "@libs/*": ["src/libs/*"],
+    "@services/*": ["src/services/*"],
+    "@pages/*": ["src/pages/*"],
+    "@typings/*": ["src/typings/*"],
+    "@utils/*": ["src/utils/*"]
+  },
+}
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 3. Set prettier & eslint
 
-### `npm test`
+- root 위치에 `.prettier`, `.eslintrc.js` 파일 추가
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+{
+  "singleQuote": true,
+  "semi": true,
+  "tabWidth": 2,
+  "trailingComma": "all"
+}
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+// .eslintrc.js 파일을 루트폴더에서 직접 확인바람.
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 4. 필요한 라이브러리 설치
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- react-router-dom
 
-### `npm run eject`
+  - d
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  ```
+  npm install react-router-dom
+  ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- axios
+- emotion
+  - CSS in JS 스타일 라이브러리
+  ```
+  npm install @emotion/react
+  npm install @emotion/styled
+  ```
+- Storybook
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  - An open source tool for building UI components and pages in isolation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  ```
+  npx -p @storybook/cli sb init
+  ```
 
-## Learn More
+  ```
+  // package.json 안에 추가
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  "scripts": {
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - addon 추가 및 설정
+
+  ```
+
+  ```
+
+- 상태관리
+
+  - redux-toolkit
+  - redux-saga
+  - typesafe-actions
+  - redux-first-history
+    <br />
+
+  ```
+  npm install @reduxjs/toolkit
+  npm install redux-saga typesafe-actions redux-first-history
+  ```
+
+---
+
+- dayjs
+  -- 날짜 관련 라이브러리
+-
