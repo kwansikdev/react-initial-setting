@@ -26,13 +26,13 @@
 
 ## 1. CRA with typescript
 
-```
+```bash
 npx react-create-app [프로젝트명] --template typescript
 ```
 
 ## 2. Set absolute path
 
-```
+```json
 // tsconfig.json
 
 {
@@ -58,7 +58,7 @@ npx react-create-app [프로젝트명] --template typescript
 
 #### 3.1.1. Defualt config 지우기 (package.json)
 
-```
+```json
 "eslintConfig": {
   "extends": [
     "react-app",
@@ -69,7 +69,7 @@ npx react-create-app [프로젝트명] --template typescript
 
 #### 3.1.2. Install eslint
 
-```
+```bash
 npm install eslint --save-dev
 ```
 
@@ -79,7 +79,7 @@ npm install eslint --save-dev
 
 해당 명령어에 따라 eslint를 설정하면 됩니다.
 
-```
+```bash
 npx eslint --init
 ```
 
@@ -93,32 +93,28 @@ npm install --save-dev @typescript-eslint/parser eslint-import-resolver-typescri
 
 설치가 완료되면 아래와 같이 자동으로 세팅됩니다.
 
-```
+```json
 {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
-    "rules": {
-    }
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {}
 }
 ```
 
@@ -126,11 +122,11 @@ npm install --save-dev @typescript-eslint/parser eslint-import-resolver-typescri
 
 ### 3.2. Prettier
 
-```
+```bash
 npm install --save-dev --save-exact prettier eslint-config-prettier eslint-plugin-prettier
 ```
 
-```
+```bash
 touch .prettierrc
 ```
 
@@ -138,7 +134,7 @@ touch .prettierrc
 
 아래 option은 제가 자주 사용하는 셋팅값입니다.
 
-```
+```json
 // .prettierrc
 
 {
@@ -150,15 +146,13 @@ touch .prettierrc
   "jsxSingleQuote": true,
   "bracketSpacing": true
 }
-
-
 ```
 
 <br />
 
 프로젝트에서 `Jest`를 사용한다면 `env` 에 다음 코드를 추가해주세요
 
-```
+```json
 {
   "env": {
       "browser": true,
@@ -173,7 +167,7 @@ touch .prettierrc
 
 ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해야합니다.
 
-```
+```json
 {
   ...
   "extends": [
@@ -185,7 +179,7 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 
 기본적으로 제가 사용하는 기본 eslint rules 입니다.
 
-```
+```json
 {
   ...
   "rules": {
@@ -202,13 +196,13 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 
 우리가 설치한 Plugin을 사용하려면 `plugins`을 업데이트 해줘야 합니다.
 
-```
+```json
 "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"]
 ```
 
 마지막으로 ESLint에서 설정해줘야하는 것이 `eslint-import-resolver-typescript`입니다.
 
-```
+```json
 {
   ...
   "settings": {
@@ -221,7 +215,7 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 
 마지막으로 package.json의 `scripts`를 추가하면 됩니다.
 
-```
+```json
 {
   ...
   "script": {
@@ -235,7 +229,7 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 
 ### 3.4. Running ESLint, Prettier
 
-```
+```bash
 npx eslint src/* --fix
 
 npm run lint
@@ -248,7 +242,7 @@ npm run lint:fix
 
 1. Warning: React version not specified in eslint-plugin-react settings.
 
-```
+```json
 // .eslintrc.json
 
 {
@@ -270,7 +264,7 @@ npm run lint:fix
 
     - router 기능을 사용하기 위해서 필요한 라이브러리
 
-    ```
+    ```bash
     npm install react-router-dom
     ```
 
@@ -278,7 +272,7 @@ npm run lint:fix
 
 2.  axios
 
-    ```
+    ```bash
     npm install axios
     ```
 
@@ -288,7 +282,7 @@ npm run lint:fix
 
     - css in js 스타일 라이브러리
 
-    ```
+    ```bash
     npm install @emotion/react
     npm install @emotion/styled
     ```
@@ -301,9 +295,9 @@ npm run lint:fix
 
       Global Style로 설정 후 각 `styled` 속성을 쓰는 `styled component`에서 `props`로 스타일을 사용할 수 있는데 type을 설정해주면 자동완성을 사용할 수 있습니다.
 
-      ```
-      import '@emotion/react';
-      import { ThemeTypes } from '../theme/themeConfig'; // ThemeProvider에서 theme속성으로 받는 theme 객체의 타입
+      ```typescript
+      import '@emotion/react'
+      import { ThemeTypes } from '../theme/themeConfig' // ThemeProvider에서 theme속성으로 받는 theme 객체의 타입
 
       // 참고: https://emotion.sh/docs/typescript
       // 참고: https://www.typescriptlang.org/ko/docs/handbook/utility-types.html#recordkeystype
@@ -321,7 +315,7 @@ npm run lint:fix
 
     - An open source tool for building UI components and pages in isolation
 
-    ```
+    ```bash
     npx -p @storybook/cli sb init
     npx storybook init
     ```
@@ -350,7 +344,7 @@ npm run lint:fix
       `emotion`이나 `styled-component` 같은 css in js 라이브러리를 storybook 내에서도 사용할 수 있게 설정해야 합니다.
       아래 코드는 `emotion`을 사용했을 때 설정하는 코드입니다.
       <br />
-      ```
+      ```javascript
       // storybook/main.js
       module.exports = {
         ...
