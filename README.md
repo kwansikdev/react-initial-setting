@@ -7,9 +7,13 @@
 2. [Set absolute path](#2-set-absolute-path)
 
 3. [Set prettier & eslint](#3-set-prettier--eslint)
+   
    3.1. [Eslint](#31-eslint)
+   
    3.2. [Prettier](#32-prettier)
+   
    3.3. [Prettier 와 ESLint 함께 사용](#33-prettier-eslint-함께-사용)
+   
    3.4. [Running ESLint & Prettier](#34-running-eslint-prettier)
 
 4. [필요한 라이브러리 설치](#4-필요한-라이브러리-설치)
