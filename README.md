@@ -7,13 +7,13 @@
 2. [Set absolute path](#2-set-absolute-path)
 
 3. [Set prettier & eslint](#3-set-prettier--eslint)
-   
+
    3.1. [Eslint](#31-eslint)
-   
+
    3.2. [Prettier](#32-prettier)
-   
+
    3.3. [Prettier 와 ESLint 함께 사용](#33-prettier-eslint-함께-사용)
-   
+
    3.4. [Running ESLint & Prettier](#34-running-eslint-prettier)
 
 4. [필요한 라이브러리 설치](#4-필요한-라이브러리-설치)
@@ -293,7 +293,29 @@ npm run lint:fix
     npm install @emotion/styled
     ```
 
-      <br />
+    - Global Style 셋팅
+
+    <br />
+
+    - TypeScript
+
+      Global Style로 설정 후 각 `styled` 속성을 쓰는 `styled component`에서 `props`로 스타일을 사용할 수 있는데 type을 설정해주면 자동완성을 사용할 수 있습니다.
+
+      ```
+      import '@emotion/react';
+      import { ThemeTypes } from '../theme/themeConfig'; // ThemeProvider에서 theme속성으로 받는 theme 객체의 타입
+
+      // 참고: https://emotion.sh/docs/typescript
+      // 참고: https://www.typescriptlang.org/ko/docs/handbook/utility-types.html#recordkeystype
+
+      declare module '@emotion/react' {
+        export interface Theme extends ThemeTypes {}
+      }
+      ```
+
+      `tsconfig.json` 내의 `includes`에 `"types/*.d.ts"` 추가
+
+    <br />
 
 4.  Storybook
 
@@ -301,24 +323,53 @@ npm run lint:fix
 
     ```
     npx -p @storybook/cli sb init
-    ```
-
-    ```
-    // package.json 안에 추가
-
-    "scripts": {
-      "storybook": "start-storybook -p 6006 -s public",
-      "build-storybook": "build-storybook -s public"
-    },
+    npx storybook init
     ```
 
     - addon 추가 및 설정
 
-           ```
+      - Controls
+        ```
+        npm install --save-dev @storybook/addon-controls
+        ```
+        ```
+        // storybook/main.js
+        module.exports = {
+          ...
+          addons: [
+            '@storybook/addon-controls' // 첫번째에 넣는 이유는 storybook 내에서 controls 탭이 먼저 선택되도록 하기 위해서입니다.
+            ...
+          ]
+        }
+        ```
+        controls에서 argTypes 필드를 설정할 수 있습니다. (https://storybook.js.org/docs/react/essentials/controls#annotation)
+        자주 사용되는 주석들은 따로 파일에 설정해서 불러와서 쓸 수 있게 모듈로 만들어도 좋을 것 같습니다.
+        <br />
 
-           ```
-
+    - css in js 설정
+      `emotion`이나 `styled-component` 같은 css in js 라이브러리를 storybook 내에서도 사용할 수 있게 설정해야 합니다.
+      아래 코드는 `emotion`을 사용했을 때 설정하는 코드입니다.
       <br />
+      ```
+      // storybook/main.js
+      module.exports = {
+        ...
+        "webpackFinal": async (config) => ({
+          ...config,
+          resolve: {
+            ...config.resolve,
+            alias: {
+              ...config.resolve.alias,
+              "@emotion/core": resolvePath("node_modules/@emotion/react"),
+              "@emotion/styled": resolvePath("node_modules/@emotion/styled"),
+              "emotion-theming": resolvePath("node_modules/@emotion/react"),
+            }
+          }
+        })
+      }
+      ```
+
+<br />
 
 5.  상태관리
 
