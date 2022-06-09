@@ -22,12 +22,10 @@
 
 ---
 
-<br />
-
 ## 1. CRA with typescript
 
 ```bash
-npx react-create-app [프로젝트명] --template typescript
+npx create-react-app [프로젝트명] --template typescript
 ```
 
 ## 2. Set absolute path
@@ -38,7 +36,7 @@ npx react-create-app [프로젝트명] --template typescript
 {
   ...,
   // 예시
-  "baseUrl": ".",
+  "baseUrl": "./src",
   "paths": {
     "@components/*": ["src/components/*"],
     "@hooks/*": ["src/hooks/*"],
@@ -82,6 +80,8 @@ npm install eslint --save-dev
 ```bash
 npx eslint --init
 ```
+
+![image](uploads/24f2f011a652f179843c9f2af4c456b9/image.png)
 
 #### 3.1.4. Install Plugin
 
@@ -168,6 +168,8 @@ touch .prettierrc
 ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해야합니다.
 
 ```json
+// .eslintrc.json
+
 {
   ...
   "extends": [
@@ -180,6 +182,8 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 기본적으로 제가 사용하는 기본 eslint rules 입니다.
 
 ```json
+// .eslintrc.json
+
 {
   ...
   "rules": {
@@ -192,6 +196,15 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
     "react-hooks/exhaustive-deps": "warn"
   }
 }
+```
+
+`.eslintignore` 파일을 만들어 eslint가 적용되지 않아야 하는 파일을 추가해줍니다.
+
+```
+src/react-app-env.d.ts
+src/serviceWorker.ts
+node_modules
+dist
 ```
 
 우리가 설치한 Plugin을 사용하려면 `plugins`을 업데이트 해줘야 합니다.
@@ -230,8 +243,6 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 ### 3.4. Running ESLint, Prettier
 
 ```bash
-npx eslint src/* --fix
-
 npm run lint
 
 npm run lint:fix
@@ -258,7 +269,85 @@ npm run lint:fix
 
 <br />
 
-## 4. 필요한 라이브러리 설치
+## 4. Hursky, Lint-staged
+
+ESLint를 프로젝트에 적용시킬 때는 협업하는 모든 사람들이 같은 규칙 내에서 코딩을 하는데 매번 명령어를 입력해서 Lint를 사용하는 부분이 불편할 수 있기에 git hook 제어를 위한 `hursky` 와 커밋 상태를 알 수 있는 `lint-staged`를 사용해서 `git commit` 명령어를 사용했을 때 실행 될 수 있게 하려고 합니다.
+
+`lint-staged`를 사용하는 이유는 매번 모든 파일에 대해서 pretter와 lint를 적용하기에는 프로젝트의 규모가 클수록 리소스가 많이 드므로
+staged 된 상태의 파일만 적용할 수 있게 하려고 사용합니다.
+
+### 4.1. 설치
+
+mrm을 이용하면 lint-staged와 husky를 간편하게 설정해줄 수 있다. 👍
+
+```bash
+npx mrm@2 lint-staged
+```
+
+위 명령어를 실행하면 .husky폴더가 생기고 package.json 파일에 다음과 같은 코드가 추가로 생깁니다.
+
+```json
+{
+  ...
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
+  ...
+}
+```
+
+### 4.2. hursky 설정
+
+mrm이 기본적으로 `hursky` 설정을 해주기에 따로 설정해줘야 하는 부분은 없습니다.
+기본적으로 `pre-commit` 내용을 살펴보면
+
+```
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged
+
+```
+
+git commit을 하기전에 npx lint-staged 명령어가 실행되게 됩니다.
+
+### 4.3. lint-staged 설정하기
+
+`lint-staged`는 따로 설정이 필요합니다.
+
+일단 `prettier`와 `eslint`를 사용하는 파일 확장자명을 다르게 나누었습니다.
+
+```json
+// package.json
+
+{
+  ...
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,css,md,json}": [
+      "prettier --write --config ./.prettierrc"
+    ],
+    "src/**/*.{js,jsx,ts,tsx,json}": [
+      "eslint --max-warnings 0"
+    ]
+  }
+
+}
+```
+
+`--max-wrainings 0` 은 lint 사용했을 때 warning 경고까지 잡는(?) 옵션입니다.
+
+<br />
+
+---
+
+## 5. 필요한 라이브러리 설치
 
 1.  react-router-dom
 
