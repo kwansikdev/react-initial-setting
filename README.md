@@ -30,23 +30,84 @@ npx create-react-app [프로젝트명] --template typescript
 
 ## 2. Set absolute path
 
+CRA를 통한 프로젝트는 webpack에 alias 설정을 통해 절대경로를 설정할 수 있지만, `eject`를 해야하는 위험이 있습니다.
+
+```bash
+npm install --save-dev customize-cra react-app-rewired
+```
+
+패키지 설치 후, package.json의 script를 수정해줘야 한다.
+
+```json
+// package.json
+
+{
+  ...
+  "scripts": {
+    ...,
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject",
+    ...,
+  }
+}
+```
+
+root 경로에 `config-overrides.js`를 만들어 웹팩을 overriding을 할 수 있습니다.
+
+```javascript
+// config-overrides.js
+
+const { override, addWebpackAlias } = require('customize-cra')
+const path = require('path')
+
+module.exports = override(
+  addWebpackAlias({
+    '@': path.resolve(__dirname, 'src'),
+  }),
+)
+```
+
+TypeScript를 사용하고 있기에 `tsconfig.paths.json`파일을 만들어 path를 설정해줘야 합니다.
+
+```json
+// tsconfig.paths.json
+
+{
+  // 예시 1
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+
+  // 예시 2
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@libs/*": ["src/libs/*"],
+      "@services/*": ["src/services/*"],
+      "@pages/*": ["src/pages/*"],
+      "@typings/*": ["src/typings/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+  }
+}
+```
+
+마지막으로 `tsconfig.json`에서 `tsconfig.paths.json`의 내용이 적용될 수 있게 추가 설정을 해줍니다.
+
 ```json
 // tsconfig.json
 
 {
-  ...,
-  // 예시
-  "baseUrl": "./src",
-  "paths": {
-    "@components/*": ["src/components/*"],
-    "@hooks/*": ["src/hooks/*"],
-    "@layouts/*": ["src/layouts/*"],
-    "@libs/*": ["src/libs/*"],
-    "@services/*": ["src/services/*"],
-    "@pages/*": ["src/pages/*"],
-    "@typings/*": ["src/typings/*"],
-    "@utils/*": ["src/utils/*"]
-  },
+  ...
+  "extends": "./tsconfig.paths.json"
 }
 ```
 
