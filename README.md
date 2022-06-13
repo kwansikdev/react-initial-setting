@@ -28,6 +28,8 @@
 npx create-react-app [프로젝트명] --template typescript
 ```
 
+<br />
+
 ## 2. Set absolute path
 
 CRA를 통한 프로젝트는 webpack에 alias 설정을 통해 절대경로를 설정할 수 있지만, `eject`를 해야하는 위험이 있습니다.
@@ -111,6 +113,8 @@ TypeScript를 사용하고 있기에 `tsconfig.paths.json`파일을 만들어 pa
 }
 ```
 
+<br />
+
 ## 3. Set Prettier & ESLint
 
 ### 3.1. ESLint
@@ -155,6 +159,7 @@ npm install --save-dev @typescript-eslint/parser eslint-import-resolver-typescri
 설치가 완료되면 아래와 같이 자동으로 세팅됩니다.
 
 ```json
+/* eslintrc.json */
 {
   "env": {
     "browser": true,
