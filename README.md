@@ -146,7 +146,7 @@ npm install eslint --save-dev
 npx eslint --init
 ```
 
-![image](uploads/24f2f011a652f179843c9f2af4c456b9/image.png)
+![eslint-setting-image](https://user-images.githubusercontent.com/37237125/173259212-0709f23f-7c86-4343-9753-fa8172fab194.png)
 
 #### 3.1.4. Install Plugin
 
