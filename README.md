@@ -216,25 +216,13 @@ touch .prettierrc
 
 <br />
 
-프로젝트에서 `Jest`를 사용한다면 `env` 에 다음 코드를 추가해주세요
-
-```json
-{
-  "env": {
-      "browser": true,
-      "es2021": true,
-      "jest": true // Add this line!
-  },
-  ...
-}
-```
 
 ### 3.3. Prettier, ESLint 함께 사용
 
 ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해야합니다.
 
 ```json
-// .eslintrc.json
+/* .eslintrc.json */
 
 {
   ...
@@ -245,10 +233,29 @@ ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해�
 }
 ```
 
+<br />
+
+프로젝트에서 `Jest`를 사용한다면 `env` 에 다음 코드를 추가해주세요
+
+```json
+/* .eslintrc.json */
+
+{
+  "env": {
+      "browser": true,
+      "es2021": true,
+      "jest": true // Add this line!
+  },
+  ...
+}
+```
+
+<br />
+
 기본적으로 제가 사용하는 기본 eslint rules 입니다.
 
 ```json
-// .eslintrc.json
+/* .eslintrc.json */
 
 {
   ...
@@ -282,6 +289,8 @@ dist
 마지막으로 ESLint에서 설정해줘야하는 것이 `eslint-import-resolver-typescript`입니다.
 
 ```json
+/* .eslintrc.json */
+
 {
   ...
   "settings": {
@@ -295,6 +304,8 @@ dist
 마지막으로 package.json의 `scripts`를 추가하면 됩니다.
 
 ```json
+/* package.json */
+
 {
   ...
   "script": {
