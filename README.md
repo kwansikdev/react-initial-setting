@@ -91,11 +91,12 @@ TypeScript를 사용하고 있기에 `tsconfig.paths.json`파일을 만들어 pa
     "paths": {
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@layouts/*": ["src/layouts/*"],
+      "@layout/*": ["src/layout/*"],
       "@libs/*": ["src/libs/*"],
+      "@functions/*": ["src/functions/*"],
       "@services/*": ["src/services/*"],
       "@pages/*": ["src/pages/*"],
-      "@typings/*": ["src/typings/*"],
+      "@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     },
   }
