@@ -16,9 +16,11 @@
 
    3.4. [Running ESLint & Prettier](#34-running-eslint-prettier)
 
-4. [필요한 라이브러리 설치](#4-필요한-라이브러리-설치)
+4. [Hursky, Lint-staged](#4-hursky-lint-staged)
 
-   4.1. [](#)
+   4.1. [설치](#41-설치)
+   4.2. [hursky 설정](#42-hursky-설정)
+   4.3. [lint-staged 설정하기](#43-lint-staged-설정하기)
 
 ---
 
@@ -217,7 +219,6 @@ touch .prettierrc
 
 <br />
 
-
 ### 3.3. Prettier, ESLint 함께 사용
 
 ESLint와 함께 Prettier를 사용하려면 `extends`에 prettier를 추가해야합니다.
@@ -411,7 +412,7 @@ git commit을 하기전에 npx lint-staged 명령어가 실행되게 됩니다.
     "src/**/*.{js,jsx,ts,tsx,css,md,json}": [
       "prettier --write --config ./.prettierrc"
     ],
-    "src/**/*.{js,jsx,ts,tsx,json}": [
+    "src/**/*.{js,jsx,ts,tsx}": [
       "eslint --max-warnings 0"
     ]
   }
