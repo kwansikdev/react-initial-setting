@@ -23,7 +23,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,json}'",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
-    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -54,7 +55,17 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.6.2",
     "react-app-rewired": "^2.2.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,css,md,json}": [
+      "prettier --write --config ./.prettierrc"
+    ],
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --max-warnings 0"
+    ]
   }
 }
