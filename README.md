@@ -19,7 +19,9 @@
 4. [Hursky, Lint-staged](#4-hursky-lint-staged)
 
    4.1. [설치](#41-설치)
+
    4.2. [hursky 설정](#42-hursky-설정)
+
    4.3. [lint-staged 설정하기](#43-lint-staged-설정하기)
 
 ---
